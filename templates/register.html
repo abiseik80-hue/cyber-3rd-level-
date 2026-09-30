@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Create Account | Cyber Incident System{% endblock %}
+{% block content %}
+<section class="auth-layout auth-layout-register">
+    <div class="auth-aside">
+        <div class="eyebrow"><span class="pulse-dot"></span> INCIDENT RESPONSE WORKSPACE</div>
+        <h1>Make every<br><span>report count.</span></h1>
+        <p>Create an account to help your team record incidents and follow them through resolution.</p>
+        <div class="auth-aside-rule"></div>
+        <div class="auth-aside-note"><i class="bi bi-lock"></i><span>Your password is stored as a secure hash</span></div>
+    </div>
+    <div class="auth-panel">
+        <div class="section-kicker">GET STARTED</div>
+        <h2>Create account</h2>
+        <p class="text-secondary mb-4">Use your account to submit and manage your incident reports.</p>
+        <form method="post" action="{{ url_for('register') }}" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input id="username" name="username" class="form-control" value="{{ username|default('') }}" minlength="3" maxlength="30" autocomplete="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" class="form-control" value="{{ email|default('') }}" maxlength="120" autocomplete="email" required>
+            </div>
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" name="password" type="password" class="form-control" minlength="8" maxlength="128" autocomplete="new-password" required>
+                </div>
+                <div class="col-sm-6">
+                    <label for="confirm_password" class="form-label">Confirm password</label>
+                    <input id="confirm_password" name="confirm_password" type="password" class="form-control" minlength="8" maxlength="128" autocomplete="new-password" required>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Register <i class="bi bi-arrow-right ms-1"></i></button>
+        </form>
+        <p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Log In | Cyber Incident System{% endblock %}
+{% block content %}
+<section class="auth-layout">
+    <div class="auth-aside">
+        <div class="eyebrow"><span class="pulse-dot"></span> INCIDENT RESPONSE WORKSPACE</div>
+        <h1>See the signal.<br><span>Report it clearly.</span></h1>
+        <p>One shared place to document, track, and resolve cybersecurity incidents.</p>
+        <div class="auth-aside-rule"></div>
+        <div class="auth-aside-note"><i class="bi bi-shield-check"></i><span>Built for practical security coordination</span></div>
+    </div>
+    <div class="auth-panel">
+        <div class="section-kicker">ACCOUNT ACCESS</div>
+        <h2>Welcome back</h2>
+        <p class="text-secondary mb-4">Sign in to continue to your incident workspace.</p>
+        <form method="post" action="{{ url_for('login') }}" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label for="identity" class="form-label">Username or email</label>
+                <input id="identity" name="identity" class="form-control" value="{{ identity|default('') }}" autocomplete="username" required autofocus>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password" class="form-control" autocomplete="current-password" required>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Log in <i class="bi bi-arrow-right ms-1"></i></button>
+        </form>
+        <p class="auth-switch">New to the system? <a href="{{ url_for('register') }}">Create an account</a></p>
+    </div>
+</section>
+{% endblock %}

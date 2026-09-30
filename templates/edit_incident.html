@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Edit Incident #{{ incident.id }} | Cyber Incident System{% endblock %}
+{% block content %}
+<div class="page-heading"><div class="section-kicker">RESPONSE / UPDATE REPORT #{{ incident.id }}</div><h1>Edit incident</h1><p class="text-secondary mb-0">Update the report details and save your changes.</p></div>
+<section class="form-section">
+    <div class="form-section-heading"><span class="step-number"><i class="bi bi-pencil"></i></span><div><h2>Incident information</h2><p>Reported by {{ incident.reporter }} on {{ incident.reported_date.strftime('%b %d, %Y') }}.</p></div></div>
+    <form method="post" action="{{ url_for('edit_incident', incident_id=incident.id) }}" class="incident-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="row g-3">
+            <div class="col-12"><label for="title" class="form-label">Incident title <span class="required-mark">*</span></label><input id="title" name="title" class="form-control" maxlength="150" value="{{ incident.title }}" required></div>
+            <div class="col-md-6"><label for="incident_type" class="form-label">Incident type <span class="required-mark">*</span></label><select id="incident_type" name="incident_type" class="form-select" required>{% for option in incident_types %}<option value="{{ option }}" {% if incident.incident_type == option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></div>
+            <div class="col-md-6"><label for="severity" class="form-label">Severity <span class="required-mark">*</span></label><select id="severity" name="severity" class="form-select" required>{% for option in severities %}<option value="{{ option }}" {% if incident.severity == option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></div>
+            <div class="col-md-6"><label for="affected_system" class="form-label">Affected system <span class="required-mark">*</span></label><input id="affected_system" name="affected_system" class="form-control" maxlength="150" value="{{ incident.affected_system }}" required></div>
+            <div class="col-md-6"><label for="status" class="form-label">Status <span class="required-mark">*</span></label><select id="status" name="status" class="form-select" required>{% for option in statuses %}<option value="{{ option }}" {% if incident.status == option %}selected{% endif %}>{{ option }}</option>{% endfor %}</select></div>
+            <div class="col-12"><label for="description" class="form-label">Description <span class="required-mark">*</span></label><textarea id="description" name="description" class="form-control" rows="6" required>{{ incident.description }}</textarea></div>
+        </div>
+        <div class="form-actions"><a class="btn btn-outline-light" href="{{ url_for('incident_details', incident_id=incident.id) }}">Cancel</a><button class="btn btn-primary" type="submit"><i class="bi bi-check2 me-1"></i>Save changes</button></div>
+    </form>
+</section>
+{% endblock %}
